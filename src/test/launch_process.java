@@ -10,7 +10,7 @@ public class launch_process {
         try {
 
         	Runtime runtime_i = Runtime.getRuntime();
-        	Process pr_i = runtime_i.exec("identify /Users/niketpathak/Documents/ISEP_sem2/IMG_processing/Research/img2text_test/recomm1.jpg");
+        	Process pr_i = runtime_i.exec("identify /Users/niketpathak/Documents/ISEP_sem2/IMG_processing/Research/img2text_test/PI5555.jpg");
 //        	Process pr_i = runtime_i.exec("identify /Users/niketpathak/Documents/logo-gkm.png");
 
             BufferedReader input = new BufferedReader(new InputStreamReader(pr_i.getInputStream()));
@@ -32,7 +32,7 @@ public class launch_process {
             System.out.println("Exited identify with error code "+exitVal_i);
             if(filetype_accepted && exitVal_i==0){
             	Runtime runtime_t = Runtime.getRuntime();
-                Process pr_t = runtime_t.exec("tesseract /Users/niketpathak/Documents/ISEP_sem2/IMG_processing/Research/img2text_test/recomm1.jpg /Users/niketpathak/Documents/ISEP_sem2/IMG_processing/Research/img2text_test/niket1 -l eng");
+                Process pr_t = runtime_t.exec("tesseract /Users/niketpathak/Documents/ISEP_sem2/IMG_processing/Research/img2text_test/PI5555.jpg /Users/niketpathak/Documents/ISEP_sem2/IMG_processing/Research/img2text_test/niket1 -l fra+eng");
                 BufferedReader input_t = new BufferedReader(new InputStreamReader(pr_t.getInputStream()));
                 BufferedReader error_if_any_t = new BufferedReader(new InputStreamReader(pr_t.getErrorStream()));
                 line=null;err =null;
