@@ -4,12 +4,12 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class launch_process {
+public class launch_process_backup {
 
 	public static void main(String args[]) {
 		 Boolean filetype_accepted=false;
         try {
-        	
+
         	Runtime runtime = Runtime.getRuntime();
         	Process pr_i = runtime.exec("identify /Users/niketpathak/Documents/ISEP_sem2/IMG_processing/Research/img2text_test/PI5555.jpg");
 //        	Process pr_i = runtime.exec("identify /Users/niketpathak/Documents/logo-gkm.png");
@@ -31,7 +31,7 @@ public class launch_process {
             int exitVal_i = pr_i.waitFor();
             System.out.println("Identify Exit error code "+exitVal_i);
             if(filetype_accepted && exitVal_i==0){
-            	Process pr_grayscale = runtime.exec("convert /Users/niketpathak/Documents/ISEP_sem2/IMG_processing/Research/img2text_test/dpi.jpg -set colorspace Gray -separate -average /Users/niketpathak/Documents/ISEP_sem2/IMG_processing/Research/img2text_test/PI5555_grscl.jpg");
+            	Process pr_grayscale = runtime.exec("convert /Users/niketpathak/Documents/ISEP_sem2/IMG_processing/Research/img2text_test/PI5555.jpg -set colorspace Gray -separate -average /Users/niketpathak/Documents/ISEP_sem2/IMG_processing/Research/img2text_test/PI5555_grscl.jpg");
             	int exitVal_gr = pr_grayscale.waitFor();
             	 BufferedReader input_gr = new BufferedReader(new InputStreamReader(pr_grayscale.getInputStream()));
                  BufferedReader error_if_any_gr = new BufferedReader(new InputStreamReader(pr_grayscale.getErrorStream()));
@@ -80,37 +80,46 @@ public class launch_process {
             System.out.println(br_pt);
             String[] obt = process_fn.split("");					//split it into characters
           StringBuffer result_buffer = new StringBuffer();
-          for (int i = 0; i < 6; i++) {						
-            	result_buffer.append(obt[i]);					//Get IDFRA!
-            }
-          String chk_strr = result_buffer.toString();
-          System.out.println("CheckString->"+chk_strr);
-          Boolean isID=false;
-          if(chk_strr.trim().equalsIgnoreCase("IDFRA")){
-        	  isID=true;
-          }
-          System.out.println("chk str Bool->"+isID);
-          result_buffer=new StringBuffer();
           for (int i = 6; i < br_pt; i++) {						
           	result_buffer.append(obt[i]);					//append the char viz fname!
           }
-          String fname = result_buffer.toString().trim();
+          String fname = result_buffer.toString();
          System.out.println("FirstName->"+fname);
          obt=process_ln.split("");
          result_buffer=new StringBuffer();
          for (int i = 0; i < 13; i++) {						
            	result_buffer.append(obt[i]);					//append the char viz ID!
            }
-         String id_f = result_buffer.toString().trim();
+         String id_f = result_buffer.toString();
          System.out.println("ID->"+id_f);
          result_buffer=new StringBuffer();
          for (int i = 14; i < process_ln.length()-8; i++) {						
             	result_buffer.append(obt[i]);					//append the char viz lname with <<!
             }
          String lname = result_buffer.toString();
-         lname = lname.replaceAll("<<|<", " ").trim();					//remove </<<+
+         lname = lname.replaceAll("<<|<", " ");					//remove </<<+
          System.out.println("f_name->"+lname);
- 
+//            int indexfound = text_cnt.toUpperCase().indexOf("Nom".toUpperCase()); //indexfound returns index of 'N'
+//            String[] all_colin_sep = text_cnt.substring(indexfound+4).split(":");
+//            String[] last_name = all_colin_sep[0].split(" ");	//get last name
+//            String[] first_name = all_colin_sep[1].split(" ");	//get first name
+//            String[] dob = all_colin_sep[3].split(" ");			//get DOB
+//            String ret_id_pr = dob[dob.length-1];				//get the last element in array
+//            String[] obt = ret_id_pr.split("");					//split it into characters
+//            StringBuffer result_buffer = new StringBuffer();
+//            for (int i = 0; i < 14; i++) {						
+//            	result_buffer.append( obt[i] );					//append the first 15-char viz ID!
+//            }
+//            String identity_no = result_buffer.toString();
+//
+//            System.out.println("Last Name is ->"+last_name[0]+". FirstName is ->"+first_name[0]+ ". DOB->"+dob[0]+ ". Final_ID No.->"+identity_no+ ". Process_string->"+ret_id_pr);
+//   	     	if (indexfound > -1) {	// If greater than -1, means we found the word
+//             System.out.println("Word was found at position " + indexfound);
+//   	                    }
+//              System.out.println(Arrays.toString(dob));
+//              System.out.println("My file-content:"+text_cnt);
+//            System.out.println("Boolen value is->"+filetype_accepted);	//this variable is accessible globally
+            
         } catch(Exception e) {
             System.out.println(e.toString());
             e.printStackTrace();
