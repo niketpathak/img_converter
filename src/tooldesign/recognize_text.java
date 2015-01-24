@@ -17,17 +17,11 @@ public class recognize_text {
 	private long filesize;
 	Runtime runtime = Runtime.getRuntime();
 	
-	public recognize_text(String filepath_t, String filename_ori,long fsize){
-		filename = filename_ori;
-		filepath=filepath_t;
-		filesize = fsize;
-		String[] obt = filename.split("");					//split it into characters
-	      StringBuffer result_buffer = new StringBuffer();
-	      for (int i = 3; i < 7; i++) {						
-	        	result_buffer.append(obt[i]);					//Get last 4-digits of ID!
-	        }
-	    id_last_four = result_buffer.toString();
-//	    System.out.println(id_last_four);
+	public recognize_text(String filepath_t, String filename_ori,long fsize,int stud_id){
+		this.filename = filename_ori;
+		this.filepath=filepath_t;
+		this.filesize = fsize;
+		this.id_last_four =Integer.toString(stud_id);
 	}
 	
 	public String[] recognize_textcontent(){
@@ -62,11 +56,11 @@ public class recognize_text {
 	            	}
 	            	this.tesseract_detection();
 	            	final_data=this.processtext();
+	    	        this.cleanup();
 	            } else {
 	            	System.out.println("Unsupported File Type");
 	            	final_data[0]="filetype_error";
 	            }
-	             this.cleanup();
 //	            System.out.println(final_data[0]+ final_data[1] + final_data[2]);		//data obtained here!
 //	          return "Name: "+first_name[0]+" "+last_name[0]+". ID: "+identity_no+ ".";
 	            
@@ -125,7 +119,7 @@ public class recognize_text {
 	}
 		
 	public String[] processtext() throws IOException{
-		String text_cnt = "";String line="";String[] data= {"undefined","undefined","0","false"};	// lname, fname, ID number
+		String text_cnt = "";String line="";String[] data= {"undefined","undefined","0","false","0000"};	// lname, fname, ID number
 		String file_path_ts = filepath+"niket1.txt";
         BufferedReader file_readd;
 		try {
@@ -178,7 +172,7 @@ public class recognize_text {
      String lname = result_buffer.toString();
      lname = lname.replaceAll("<<|<", " ");					//remove </<<+
      System.out.println("f_name->"+fname+". l_name->"+lname+". ID->"+id_f);
-      	data[0]=lname;data[1]=fname;data[2]=id_f;data[3]=isID.toString();
+      	data[0]=lname;data[1]=fname;data[2]=id_f;data[3]=isID.toString();data[4]=this.id_last_four;
         }
         catch (Exception e){
         	e.printStackTrace();
